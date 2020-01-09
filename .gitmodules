@@ -1,0 +1,3 @@
+[submodule "src/missue-tracker-linebot"]
+	path = src/missue-tracker-linebot
+	url = https://github.com/MikuEngineering/missue-tracker-linebot
