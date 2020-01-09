@@ -1,0 +1,62 @@
+version: "3"
+services:
+  backend:
+    build:
+      context: ./src/missue-tracker-backend
+      args:
+        PORT: ${PORT:-8000}
+        DB_HOST: ${DB_HOST:-database}
+        DB_USERNAME: ${DB_USERNAME:-miku}
+        DB_PASSWORD: ${DB_PASSWORD:-mtpassword}
+        DB_DATABASE: ${DB_DATABASE:-missue_tracker}
+        SESSION_SECRET: ${SESSION_SECRET:-nest secret}
+        LINE_BOT_HOST: linebot
+    environment:
+      WAIT_HOSTS: database:3306
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    expose:
+      - ${PORT:-8000}
+    depends_on:
+      - database
+  linebot:
+    build:
+      context: ./src/missue-tracker-linebot
+      args:
+        LINE_BOT_PORT: ${PORT:-8001}
+        LINE_BOT_DB_HOST: ${LINE_BOT_DB_HOST:-database2}
+        LINE_BOT_DB_USERNAME: ${LINE_BOT_DB_USERNAME:-miku}
+        LINE_BOT_DB_PASSWORD: ${LINE_BOT_DB_PASSWORD:-mtpassword}
+        LINE_BOT_DB_DATABASE: ${LINE_BOT_DB_DATABASE:-missue_tracker}
+        LINE_CHANNEL_ACCESS_TOKEN: ${LINE_CHANNEL_ACCESS_TOKEN}
+        LINE_CHANNEL_SECRET: ${LINE_CHANNEL_SECRET}
+    environment:
+      WAIT_HOSTS: database:3306
+    ports:
+      - "${PORT:-8001}:${PORT:-8001}"
+    expose:
+      - ${PORT:-8001}
+    depends_on:
+      - database2
+  database:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-rootpassword}
+      - MYSQL_USER=${DB_USERNAME:-miku}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-mtpassword}
+      - MYSQL_DATABASE=${DB_DATABASE:-missue_tracker}
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+  database2:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-rootpassword}
+      - MYSQL_USER=${DB_USERNAME:-miku}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-mtpassword}
+      - MYSQL_DATABASE=${DB_DATABASE:-missue_tracker}
+    ports:
+      - "3307:3306"
+    expose:
+      - 3307
