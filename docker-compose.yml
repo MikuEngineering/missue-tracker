@@ -1,5 +1,18 @@
 version: "3"
 services:
+  frontend:
+    build:
+      context: ./src/missue-tracker-frontend
+      args:
+        API_BASE_URL: 'http://localhost:8000'
+    environment:
+      WAIT_HOSTS: backend:8000
+    ports:
+      - "${PORT:-8080}:${PORT:-8080}"
+    expose:
+      - ${PORT:-8080}
+    depends_on:
+      - backend
   backend:
     build:
       context: ./src/missue-tracker-backend
