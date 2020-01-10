@@ -30,3 +30,5 @@ docker-compose build && docker-compose up
 ngrok http 8001
 ```
 6. 將 `ngrok` 畫面中 `Forwarding` 的網址（https 開頭的）加上 `/callback` 後設定為 LINE bot 設定頁面的 Web Hook 網址（例如：https://3bbe94ae.ngrok.io/callback）。
+
+7. 前端預設位於 localhost:8000
