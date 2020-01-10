@@ -4,3 +4,6 @@
 [submodule "src/missue-tracker-backend"]
 	path = src/missue-tracker-backend
 	url = https://github.com/MikuEngineering/missue-tracker-backend
+[submodule "src/missue-tracker-frontend"]
+	path = src/missue-tracker-frontend
+	url = https://github.com/MikuEngineering/missue-tracker-frontend.git
